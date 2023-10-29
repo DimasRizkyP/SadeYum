@@ -44,20 +44,20 @@ const HomeScreen = () => {
 
   const [dataTrending, setDataTrending] = useState([
     {
-      namaResep: 'Ayam Goreng Mantap',
+      namaResep: 'Bakso Balap',
       author: 'Anggi',
-      image: require('../../images/1.jpg'),
+      image: require('../../pages/Resep/image/bakso.jpg'),
       resep: 'Ayam Goreng Di lengkapi resep - resep seperti ',
     },
     {
-      namaResep: 'Ayam Goreng Rica Rica',
+      namaResep: 'Nasi Uduk Racing',
       author: 'Nanda',
-      image: require('../../images/2.jpg'),
+      image: require('../../pages/Resep/image/nasiuduk.jpg'),
     },
     {
-      namaResep: 'Ayam Goreng Telur',
+      namaResep: 'Ayam Bebutu',
       author: 'Fernandes',
-      image: require('../../images/3.jpg'),
+      image: require('../../pages/Resep/image/ayam.jpg'),
     },
     {
       namaResep: 'Mie Goreng Ayam',
@@ -255,17 +255,17 @@ const HomeScreen = () => {
         }}>
         <TouchableOpacity
           style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-          <Home color="rgb(0, 88, 47)" variant="Linear" size={24} />
+          <Home color="rgb(0, 88, 47)" variant="Linear" size={23} />
           <Text style={{color: 'rgb(0, 88, 47)'}}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-          <Category color="rgb(0, 88, 47)" variant="Linear" size={24} />
+          <Category color="rgb(0, 88, 47)" variant="Linear" size={23} />
           <Text style={{color: 'rgb(0, 88, 47)'}}>Peralatan</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-          <BookSaved color="rgb(0, 88, 47)" variant="Linear" size={24} />
+          <Profile color="rgb(0, 88, 47)" variant="Linear" size={23} />
           <Text style={{color: 'rgb(0, 88, 47)'}}>Artikel</Text>
         </TouchableOpacity>
       </View>
