@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {MasakanFavorit} from './data';
-import {Home, Category, Profile, Heart,BookSaved} from 'iconsax-react-native';
+// import {Home, Category, Profile, Heart,BookSaved} from 'iconsax-react-native';
 import {
   View,
   Text,
@@ -202,6 +202,7 @@ const HomeScreen = () => {
               showsHorizontalScrollIndicator={false}
               style={{marginLeft: 10}}
               renderItem={({item}) => (
+                //header masakan top popular
                 <TouchableOpacity
                   style={{
                     marginRight: 5,
@@ -247,28 +248,6 @@ const HomeScreen = () => {
           </View>
         </View>
       </ScrollView>
-      <View
-        style={{
-          flexDirection: 'row',
-          paddingTop: 5,
-          backgroundColor: '#FFFFFF',
-        }}>
-        <TouchableOpacity
-          style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-          <Home color="rgb(0, 88, 47)" variant="Linear" size={23} />
-          <Text style={{color: 'rgb(0, 88, 47)'}}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-          <Category color="rgb(0, 88, 47)" variant="Linear" size={23} />
-          <Text style={{color: 'rgb(0, 88, 47)'}}>Peralatan</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-          <Profile color="rgb(0, 88, 47)" variant="Linear" size={23} />
-          <Text style={{color: 'rgb(0, 88, 47)'}}>Artikel</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };

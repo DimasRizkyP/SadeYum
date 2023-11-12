@@ -5,7 +5,7 @@ import { Logo } from '../../assets/image'
 const Splashscreen = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
-      navigation.replace('Homescreen')
+      navigation.replace('MainApp')
     }, 2000)
   }, [])
   return (

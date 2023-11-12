@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StatusBar, Image, Text, TouchableOpacity } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import style from './profile.style';
-import { Home, Category, Profile as ProfileIcon, BookSaved, Heart } from 'iconsax-react-native';
+// import { Home, Category, Profile as ProfileIcon, BookSaved, Heart } from 'iconsax-react-native';
 
 
 const sotoayam =
@@ -10,7 +10,7 @@ const sotoayam =
 const mieayam =
   'https://i.pinimg.com/564x/02/73/7c/02737ced46ba22ab6e21f86aefdbcc28.jpg';
 
-const Profiles = () => {
+const Profile = () => {
   return (
     <View style={style.container}>
       <StatusBar backgroundColor={Colors.gray} />
@@ -126,7 +126,7 @@ const Profiles = () => {
             </View>
       
 
-      <View style={{ flexDirection: 'row', paddingTop: 5, backgroundColor: '#FFFFFF' }}>
+      {/* <View style={{ flexDirection: 'row', paddingTop: 5, backgroundColor: '#FFFFFF' }}>
         <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
           <Home color="rgb(0, 88, 47)" variant="Linear" size={23} />
           <Text style={{ color: 'rgb(0, 88, 47)' }}>Beranda</Text>
@@ -139,9 +139,9 @@ const Profiles = () => {
           <ProfileIcon color="rgb(0, 88, 47)" variant="Linear" size={23} />
           <Text style={{ color: 'rgb(0, 88, 47)' }}>Profile</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 };
 
-export default Profiles;
+export default Profile;

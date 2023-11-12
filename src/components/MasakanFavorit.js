@@ -10,7 +10,7 @@ import React, {useState} from 'react';
 import {AddCircle, Heart} from 'iconsax-react-native';
 const MasakanFavorit = ({item, variant, onPress}) => {
   return (
-    <View
+    <TouchableOpacity 
       style={{
         backgroundColor: 'white',
         borderRadius: 20,
@@ -34,8 +34,6 @@ const MasakanFavorit = ({item, variant, onPress}) => {
           <TouchableOpacity onPress={onPress}>
             <Heart color="rgb(0, 88, 47)" variant={variant} size={24} />
           </TouchableOpacity>
-
-          {/* <Image source={require('../Resep/image/Heart.png')} /> */}
         </View>
       </View>
       <Text style={{fontSize: 14, color: 'red'}}>{item.kategori}</Text>
@@ -48,7 +46,7 @@ const MasakanFavorit = ({item, variant, onPress}) => {
         <Text style={{fontSize: 12, color: 'black'}}>{item.khas}</Text>
         <AddCircle color="rgb(0, 88, 47)" variant="Linear" size={24} />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 const ListMasakanFavorit = ({data}) => {

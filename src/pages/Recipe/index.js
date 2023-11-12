@@ -1,6 +1,6 @@
 import React from 'react';
-import {Home, Category, Profile, Heart, BookSaved} from 'iconsax-react-native';
 import {View, Text, ScrollView, TouchableOpacity, Image} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 const photocoffe =
   'https://i.pinimg.com/564x/81/90/3d/81903d3b630263edb5ce0c3ae726d3dd.jpg';
@@ -22,7 +22,11 @@ const pempek =
   'https://i.pinimg.com/564x/23/3d/38/233d3832087edd17d843b53a81bb9c26.jpg';
 const karedok =
   'https://i.pinimg.com/564x/0f/62/99/0f62993a509a380e2c216d4b21740727.jpg';
+
+
 const Recipe = ({item, variant, onPress}) => {
+const navigation = useNavigation();
+  
   return (
     <View style={{flex: 1, backgroundColor: '#f5f5f5'}}>
       <ScrollView>
@@ -33,9 +37,8 @@ const Recipe = ({item, variant, onPress}) => {
             </Text>
             <View style={{flexDirection: 'row'}}>
               {/* Produk */}
-              <TouchableOpacity
-                activeOpacity={0.7}
-                style={{
+              <TouchableOpacity activeOpacity={0.7} 
+                style={{ 
                   backgroundColor: 'white',
                   borderRadius: 20,
                   paddingHorizontal: 5,
@@ -44,7 +47,8 @@ const Recipe = ({item, variant, onPress}) => {
                   shadowColor: 'black',
                   marginRight: 20,
                   marginVertical: 10,
-                }}>
+                }}
+                onPress={() => navigation.navigate('Detail')}>
                 <Image
                   source={{uri: pempek}}
                   style={{width: 144, height: 105, borderRadius: 20}}
@@ -73,7 +77,8 @@ const Recipe = ({item, variant, onPress}) => {
                   shadowColor: 'black',
                   marginRight: 20,
                   marginVertical: 10,
-                }}>
+                }}
+                onPress={() => navigation.navigate('Lontong')}>
                 <Image
                   source={{uri: lontongbalap}}
                   style={{width: 144, height: 105, borderRadius: 20}}
@@ -335,28 +340,6 @@ const Recipe = ({item, variant, onPress}) => {
         </View>
         <View></View>
       </ScrollView>
-      <View
-        style={{
-          flexDirection: 'row',
-          paddingTop: 5,
-          backgroundColor: '#FFFFFF',
-        }}>
-        <TouchableOpacity
-          style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-          <Home color="rgb(0, 88, 47)" variant="Linear" size={23} />
-          <Text style={{color: 'rgb(0, 88, 47)'}}>Beranda</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-          <Category color="rgb(0, 88, 47)" variant="Linear" size={23} />
-          <Text style={{color: 'rgb(0, 88, 47)'}}>Resep</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-          <BookSaved color="rgb(0, 88, 47)" variant="Linear" size={23} />
-          <Text style={{color: 'rgb(0, 88, 47)'}}>Profile</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };
