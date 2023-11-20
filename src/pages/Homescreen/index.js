@@ -1,5 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect,useRef} from 'react';
 import {MasakanFavorit} from './data';
+import { fontType, colors } from '../../theme';
 // import {Home, Category, Profile, Heart,BookSaved} from 'iconsax-react-native';
 import {
   View,
@@ -11,9 +12,18 @@ import {
   ScrollView,
   TextInput,
   ImageBackground,
+  Animated,
+  StyleSheet,
 } from 'react-native';
 import {ListMasakanFavorit} from '../../components/index';
 const HomeScreen = () => {
+  const scrollY = useRef(new Animated.Value(0)).current;
+  const diffClampY = Animated.diffClamp(scrollY, 0, 142);
+const recentY = diffClampY.interpolate({
+    inputRange: [0, 142],
+    outputRange: [0, -142],
+    extrapolate: 'clamp',
+  });
   const [kategori, setKategori] = useState([
     {
       nama: 'Masakan jawa',
@@ -68,25 +78,33 @@ const HomeScreen = () => {
 
   return (
     <View style={{flex: 1, backgroundColor: '#f5f5f5'}}>
-      <ScrollView>
+      <Animated.ScrollView  showsVerticalScrollIndicator={false}
+        onScroll={Animated.event(
+          [{nativeEvent: {contentOffset: {y: scrollY}}}],
+          {useNativeDriver: true},
+        )}
+        contentContainerStyle={{paddingTop: 40}}>
         <View>
           <StatusBar backgroundColor="#f5f5f5" barStyle="dark-content" />
-          <View
-            style={{
-              flexDirection: 'row',
-              marginTop: 30,
-              marginHorizontal: 30,
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              margin: 10,
-            }}>
-            <Text style={{fontSize: 28, fontWeight: 'bold', color: '#212121'}}>
-              Sade<Text style={{color: 'green'}}>Yum</Text>
-            </Text>
-            <View style={{marginHorizontal: -10}}>
-              <Image source={require('../Resep/image/bel.png')} />
-            </View>
-          </View>
+          <Animated.View style={[recent.container, { transform: [{ translateY: recentY }] }]}>
+  <View
+    style={{
+      flexDirection: 'row',
+      marginTop: 30,
+      marginHorizontal: 30,
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    }}
+  >
+    <Text style={{ fontSize: 28, fontWeight: 'bold', color: '#212121' }}>
+      Sade<Text style={{ color: 'green' }}>Yum</Text>
+    </Text>
+    <View style={{ marginHorizontal: -10 }}>
+      <Image source={require('../Resep/image/bel.png')} />
+    </View>
+  </View>
+</Animated.View>
+
 
           <View
             style={{
@@ -102,7 +120,7 @@ const HomeScreen = () => {
               width: 'auto',
               marginBottom: 20,
             }}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Animated.View style={[{ flexDirection: 'row', alignItems: 'center' }]}>
               <Image source={require('../Resep/image/Group.png')} />
               <TextInput
                 placeholder="Cari Resep..."
@@ -117,8 +135,10 @@ const HomeScreen = () => {
                   marginHorizontal: 165,
                 }}
               />
+            </Animated.View>
+            <View>
+              
             </View>
-            <View></View>
           </View>
           <View>
             <FlatList
@@ -192,9 +212,70 @@ const HomeScreen = () => {
                 flexDirection: 'row',
               }}>
               <Text style={{fontSize: 14}}>Lihat Semua</Text>
-              {/* <Icon name="chevron-forward" size={20} color="#bdbdbd" /> */}
             </TouchableOpacity>
           </View>
+          <View>
+            <FlatList
+              data={dataTrending}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={{marginLeft: 10}}
+              renderItem={({item}) => (
+                //header masakan top popular
+                <TouchableOpacity
+                  style={{
+                    marginRight: 5,
+                    backgroundColor: '#fff',
+                    elevation: 20,
+                    paddingHorizontal: 15,
+                    paddingVertical: 2,
+                    marginBottom: -20,
+                    borderRadius: 30,
+                    marginLeft: 5,
+                    height: 300,
+                  }}>
+                  <Image
+                    source={item.image}
+                    style={{
+                      width: 200,
+                      height: 150,
+                      marginTop: 10,
+                      marginBottom: 10,
+                      borderRadius: 30,
+                    }}
+                    resizeMode={'stretch'}
+                  />
+                  <Text
+                    style={{
+                      color: '#212121',
+                      fontSize: 18,
+                      fontWeight: 'bold',
+                    }}>
+                    {item.namaResep}
+                  </Text>
+                  <Text>{item.author}</Text>
+                  <Text
+                    style={{
+                      color: '#212121',
+                      fontSize: 10,
+                    }}>
+                    <Text>{item.resep}</Text>
+                  </Text>
+                </TouchableOpacity>
+              )}
+            />
+          </View>
+          <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginRight: 170,
+              }}>
+              <Text
+                style={{fontSize: 18, fontWeight: 'bold', color: '#212121'}}>
+                Resep Nusantara Terbaik
+              </Text>
+            </View>
           <View>
             <FlatList
               data={dataTrending}
@@ -247,9 +328,34 @@ const HomeScreen = () => {
             />
           </View>
         </View>
-      </ScrollView>
+      </Animated.ScrollView>
     </View>
   );
 };
+const recent = StyleSheet.create({
+  header: {
+    paddingHorizontal: 24,
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 52,
+    paddingTop: 8,
+    paddingBottom: 4,
+    position: 'absolute',
+    top: 0,
+    zIndex: 1000,
+    right: 0,
+    left: 0,
+    backgroundColor: colors.white(),
+  },
+  container:{
+    position: 'absolute',
+    backgroundColor: colors.white(),
+    zIndex: 999,
+    top: -60,
+    left: 0,
+    right: 0,
+    elevation: 1000,
+  },
+});
 
 export default HomeScreen;

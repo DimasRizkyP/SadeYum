@@ -1,21 +1,34 @@
-import {
-  ImageBackground,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native';
-import React from 'react';
-import { ArrowCircleLeft2, Archive } from 'iconsax-react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+  import {
+    ImageBackground,
+    StyleSheet,
+    Text,
+    View,
+    TouchableOpacity,
+    Animated,
+  } from 'react-native';
+  import React, {useRef} from 'react';
+  import { ArrowCircleLeft2, Archive } from 'iconsax-react-native';
+  import { ScrollView } from 'react-native-gesture-handler';
+  import { fontType, colors } from '../../theme';
 
-const pempek =
-  'https://i.pinimg.com/564x/23/3d/38/233d3832087edd17d843b53a81bb9c26.jpg';
+  const pempek =
+    'https://i.pinimg.com/564x/23/3d/38/233d3832087edd17d843b53a81bb9c26.jpg';
 
-const Detail = () => {
+  const Detail = () => {
+    const scrollY = useRef(new Animated.Value(0)).current;
+    const diffClampY = Animated.diffClamp(scrollY, 0, 52);
+    const headerY = diffClampY.interpolate({
+      inputRange: [0, 52],
+      outputRange: [0, -52],
+    });
+    const bottomBarY = diffClampY.interpolate({
+      inputRange: [0, 52],
+      outputRange: [0, 52],
+    });
+  
   return (
-    <View style={{ flex: 1 }}>
-      <View>
+    <ScrollView style={{ flex: 1 }}>
+      <Animated.View>
         <ImageBackground source={{ uri: pempek }} style={{ height: 300 }}>
           <View
             style={{
@@ -41,7 +54,7 @@ const Detail = () => {
               <Archive size="23" color="black" variant="Outline" />
             </TouchableOpacity>
           </View>
-          <View
+          <ScrollView
             style={{
               marginTop: 250,
               marginBottom: 40,
@@ -61,11 +74,21 @@ const Detail = () => {
                 <Text style={{ color: 'white' }}>Dengan Aneka Bumbu</Text>
               </View>
             </View>
-          </View>
+          </ScrollView>
         </ImageBackground>
-      </View>
+      </Animated.View>
 
-      <View
+      <Animated.ScrollView showsVerticalScrollIndicator={false}
+        onScroll={Animated.event(
+          [{nativeEvent: {contentOffset: {y: scrollY}}}],
+          {useNativeDriver: true},
+        )}
+        contentContainerStyle={{
+          paddingHorizontal: 24,
+          paddingTop: 62,
+          paddingBottom: 54,
+        }} 
+      
         style={{
           backgroundColor: 'white',
           flex: 1,
@@ -105,13 +128,44 @@ const Detail = () => {
           <Text>1. Buat terlebih dahulu saus cukonya. Haluskan bawang putih dan cabai beri, sedikit air. Masukkan ke dalam panci semua bahan saus kecuali gula pasir dan garam. Masak sampai gula merah larut.</Text>
           <Text>2. Masukkan gula dan garam. Masak dengan api kecil selama 15 menit. Angkat dan saring. Blender ikan sampai halus. Masukkan ke dalam baskom aduk dengan 300 ml air.</Text>
           <Text>3. Blender bawang putih dengan sedikit air. Masukkan ke adonan ikan. Tambahkan juga putih telur dan semua bumbunya. Aduk sampai rata. Tambahkan tepung tapiokanya sedikit demi sedikit sambil diaduk sampai rata.</Text>
+          <Text>3. Blender bawang putih dengan sedikit air. Masukkan ke adonan ikan. Tambahkan juga putih telur dan semua bumbunya. Aduk sampai rata. Tambahkan tepung tapiokanya sedikit demi sedikit sambil diaduk sampai rata.</Text>
+          <Text>3. Blender bawang putih dengan sedikit air. Masukkan ke adonan ikan. Tambahkan juga putih telur dan semua bumbunya. Aduk sampai rata. Tambahkan tepung tapiokanya sedikit demi sedikit sambil diaduk sampai rata.</Text>
+          <Text>3. Blender bawang putih dengan sedikit air. Masukkan ke adonan ikan. Tambahkan juga putih telur dan semua bumbunya. Aduk sampai rata. Tambahkan tepung tapiokanya sedikit demi sedikit sambil diaduk sampai rata.</Text>
+          <Text>3. Blender bawang putih dengan sedikit air. Masukkan ke adonan ikan. Tambahkan juga putih telur dan semua bumbunya. Aduk sampai rata. Tambahkan tepung tapiokanya sedikit demi sedikit sambil diaduk sampai rata.</Text>
+          <Text>3. Blender bawang putih dengan sedikit air. Masukkan ke adonan ikan. Tambahkan juga putih telur dan semua bumbunya. Aduk sampai rata. Tambahkan tepung tapiokanya sedikit demi sedikit sambil diaduk sampai rata.</Text>
           {/* Add more steps as needed */}
         </View>
-      </View>
-    </View>
+      </Animated.ScrollView>
+    </ScrollView>
   );
 };
-
+const recent = StyleSheet.create({
+  header: {
+    paddingHorizontal: 24,
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 52,
+    paddingTop: 8,
+    paddingBottom: 4,
+    position: 'absolute',
+    top: 0,
+    zIndex: 1000,
+    right: 0,
+    left: 0,
+    backgroundColor: colors.white(),
+  },
+  container:{
+    position: 'absolute',
+    backgroundColor: colors.white(),
+    zIndex: 999,
+    top: -60,
+    left: 0,
+    right: 0,
+    elevation: 1000,
+  },
+});
 export default Detail;
 
-const styles = StyleSheet.create({});
+
+
+

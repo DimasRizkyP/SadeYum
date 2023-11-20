@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, ScrollView, TouchableOpacity, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {MasakanFavorit} from './data';
 
 const photocoffe =
   'https://i.pinimg.com/564x/81/90/3d/81903d3b630263edb5ce0c3ae726d3dd.jpg';
