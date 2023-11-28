@@ -1,2 +1,3 @@
 import ListMasakanFavorit from './MasakanFavorit';
-export {ListMasakanFavorit};
+import SearchBar from './SearchBar';
+export {ListMasakanFavorit,SearchBar};

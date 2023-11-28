@@ -1,6 +1,7 @@
 import React, {useState, useEffect,useRef} from 'react';
 import {MasakanFavorit} from './data';
 import { fontType, colors } from '../../theme';
+import {ItemSmall} from '../../components'; import {SearchNormal1} from 'iconsax-react-native';
 // import {Home, Category, Profile, Heart,BookSaved} from 'iconsax-react-native';
 import {
   View,
@@ -14,10 +15,13 @@ import {
   ImageBackground,
   Animated,
   StyleSheet,
+  TouchableWithoutFeedback,
 } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
 import {ListMasakanFavorit} from '../../components/index';
 const HomeScreen = () => {
   const scrollY = useRef(new Animated.Value(0)).current;
+  const navigation = useNavigation();
   const diffClampY = Animated.diffClamp(scrollY, 0, 142);
 const recentY = diffClampY.interpolate({
     inputRange: [0, 142],
@@ -112,7 +116,7 @@ const recentY = diffClampY.interpolate({
               backgroundColor: 'white',
               marginHorizontal: 30,
               paddingHorizontal: 20,
-              paddingVertical: 2,
+              paddingVertical: 15,
               justifyContent: 'space-between',
               alignItems: 'center',
               margin: 10,
@@ -120,25 +124,14 @@ const recentY = diffClampY.interpolate({
               width: 'auto',
               marginBottom: 20,
             }}>
-            <Animated.View style={[{ flexDirection: 'row', alignItems: 'center' }]}>
-              <Image source={require('../Resep/image/Group.png')} />
-              <TextInput
-                placeholder="Cari Resep..."
-                placeholderTextColor="#000"
-              />
-              <Image
-                source={require('../Resep/image/mi_filter.png')}
-                style={{
-                  width: 20,
-                  height: 20,
-                  marginRight: 30,
-                  marginHorizontal: 165,
-                }}
-              />
-            </Animated.View>
-            <View>
-              
-            </View>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate("SearchPage")}>
+      <View style={styles.header}>
+        <View style={styles.bar}>
+          <SearchNormal1 size={18} color={colors.grey(0.5)} variant="Linear" />
+          <Text style={styles.placeholder}>Cari Resep</Text>
+        </View>
+      </View>
+      </TouchableWithoutFeedback>
           </View>
           <View>
             <FlatList
@@ -347,6 +340,8 @@ const recent = StyleSheet.create({
     left: 0,
     backgroundColor: colors.white(),
   },
+  
+  
   container:{
     position: 'absolute',
     backgroundColor: colors.white(),
@@ -355,6 +350,47 @@ const recent = StyleSheet.create({
     left: 0,
     right: 0,
     elevation: 1000,
+  },
+});
+const styles = StyleSheet.create({
+  placeholder: {
+    fontSize: 14,
+    flexDirection:'row',
+    fontFamily: fontType['Pjs-Medium'],
+    color: colors.black(0.5),
+    lineHeight: 18,
+  },
+  bar: {
+    flexDirection: 'row',
+    padding: 10,
+    gap: 10,
+    alignItems: 'center',
+    backgroundColor: colors.grey(0.05),
+    borderRadius: 10,
+    flex: 1,
+    width: '100%', // atau width: 'auto'
+  },
+  listCard: {
+    paddingHorizontal: 25,
+    paddingBottom: 10,
+    gap: 10,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: colors.white(),
+  },
+  header: {
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 52,
+    paddingTop: 8,
+    paddingBottom: 4,
+    position: 'absolute',
+    top: 0,
+    right: -25,
+    left: -25,
+    backgroundColor: colors.grey(0.05),
   },
 });
 

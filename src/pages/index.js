@@ -4,4 +4,6 @@ import Recipe from './Recipe/index';
 import Profile from './Profile';
 import Detail from './Detail';
 import Lontong from './Lontong';
-export {Splashscreen, Homescreen, Recipe,Profile,Detail,Lontong};
+import Search from './Search';
+import AddBlogForm from './konten';
+export {Splashscreen, Homescreen, Recipe,Profile,Detail,Lontong,Search,AddBlogForm};
