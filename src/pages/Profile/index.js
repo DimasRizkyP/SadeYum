@@ -1,18 +1,13 @@
-import React from 'react';
-import {
-  View,
-  StatusBar,
-  Image,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
-import {fontType, colors} from '../../theme';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import React, { useState, useCallback } from 'react';
+import { View, StatusBar, Image, Text, TouchableOpacity, StyleSheet,ActivityIndicator, RefreshControl } from 'react-native';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { fontType, colors } from '../../theme';
+import { Setting2, Edit, AddSquare } from 'iconsax-react-native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import axios from 'axios'; // Tambahkan impor untuk axios
 import style from './profile.style';
-import {Setting2, Edit,AddSquare} from 'iconsax-react-native';
-import {useNavigation} from '@react-navigation/native';
-// import { Home, Category, Profile as ProfileIcon, BookSaved, Heart } from 'iconsax-react-native';
+import {ItemSmall} from '../../components';
+
 
 const sotoayam =
   'https://i.pinimg.com/564x/1d/e4/a1/1de4a19e2d70724d71ad912cec05885d.jpg';
@@ -21,6 +16,34 @@ const mieayam =
 
 const Profile = () => {
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(true);
+  const [blogData, setBlogData] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+  const getDataBlog = async () => {
+    try {
+      const response = await axios.get(
+        'https://656b20d3dac3630cf727ba2e.mockapi.io/sadeyum/blog',
+      );
+      setBlogData(response.data);
+      setLoading(false)
+    } catch (error) {
+        console.error(error);
+    }
+  };
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      getDataBlog()
+      setRefreshing(false);
+    }, 1500);
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      getDataBlog();
+    }, [])
+  );
   return (
     <View style={style.container}>
       <StatusBar backgroundColor={Colors.gray} />
@@ -46,93 +69,16 @@ const Profile = () => {
         <View style={{alignItems: 'flex-end', marginRight: 20}}>
           <Text style={style.menuText}>Menu Yang Telah Dilihat</Text>
         </View>
+        <View style={{paddingVertical: 10, gap: 10}}>
+          {loading ? (
+            <ActivityIndicator size={'large'} color={colors.blue()} />
+          ) : (
+            blogData.map((item, index) => <ItemSmall item={item} key={index} />)
+          )}
+        </View>
       </View>
       <View style={{flexDirection: 'row'}}>
-        {/* Produk */}
-        <TouchableOpacity
-          activeOpacity={0.7}
-          style={{
-            marginBottom: 70,
-            backgroundColor: 'white',
-            borderRadius: 20,
-            paddingHorizontal: 5,
-            paddingVertical: 7,
-            elevation: 5,
-            shadowColor: 'black',
-            marginRight: 20,
-            marginVertical: 10,
-          }}>
-          <Image
-            source={{uri: sotoayam}}
-            style={{width: 144, height: 105, borderRadius: 20}}
-          />
-          <View style={{marginTop: 10}}>
-            <Text style={{fontSize: 14, fontWeight: '500', color: 'black'}}>
-              Soto Ayam
-            </Text>
-            <Text style={{fontSize: 10, marginTop: 2, color: 'black'}}>
-              7 hari yang lalu
-            </Text>
 
-            {/* Konten lainnya */}
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.7}
-          style={{
-            marginBottom: 70,
-            backgroundColor: 'white',
-            borderRadius: 20,
-            paddingHorizontal: 5,
-            paddingVertical: 7,
-            elevation: 5,
-            shadowColor: 'black',
-            marginRight: 20,
-            marginVertical: 10,
-          }}>
-          <Image
-            source={{uri: sotoayam}}
-            style={{width: 144, height: 105, borderRadius: 20}}
-          />
-          <View style={{marginTop: 10}}>
-            <Text style={{fontSize: 14, fontWeight: '500', color: 'black'}}>
-              Soto Ayam
-            </Text>
-            <Text style={{fontSize: 10, marginTop: 2, color: 'black'}}>
-              7 hari yang lalu
-            </Text>
-
-            {/* Konten lainnya */}
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.7}
-          style={{
-            marginBottom: 70,
-            backgroundColor: 'white',
-            borderRadius: 20,
-            paddingHorizontal: 5,
-            paddingVertical: 7,
-            elevation: 5,
-            shadowColor: 'black',
-            marginRight: 20,
-            marginVertical: 10,
-          }}>
-          <Image
-            source={{uri: mieayam}}
-            style={{width: 144, height: 105, borderRadius: 20}}
-          />
-          <View style={{marginTop: 10}}>
-            <Text style={{fontSize: 14, fontWeight: '500', color: 'black'}}>
-              Mie ayam
-            </Text>
-            <Text style={{fontSize: 10, marginTop: 2, color: 'black'}}>
-              2 hari yang lalu
-            </Text>
-
-            {/* Konten lainnya */}
-          </View>
-        </TouchableOpacity>
         <TouchableOpacity
           style={styles.floatingButton}
           onPress={() => navigation.navigate('AddBlog')}>
@@ -142,6 +88,7 @@ const Profile = () => {
     </View>
   );
 };
+
 
 export default Profile;
 const styles = StyleSheet.create({
@@ -217,3 +164,6 @@ const profile = StyleSheet.create({
     color: colors.black(),
   },
 });
+
+
+

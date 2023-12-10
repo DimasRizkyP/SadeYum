@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
-import {Splashscreen, Recipe, Profile, Detail, Lontong, Search,AddBlogForm} from '../pages';
+import {Splashscreen, Recipe, Profile, Detail, Lontong, Search,AddBlogForm,EditBlogForm,BlogDetail} from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../pages/Homescreen';
 import {fontType, colors} from '../theme';
@@ -112,6 +112,30 @@ const Router = () => {
           gestureDirection : 'horizontal',
           ...TransitionPresets.SlideFromRightIOS,
         }}
+      />
+      <Stack.Screen
+        name="EditBlog"
+        component={EditBlogForm}
+        options={{
+          headerShown: false,
+          animationEnabled: true,
+          animationTypeForReplace: 'pop',
+          gestureEnabled: true,
+          gestureDirection: 'horizontal',
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+            <Stack.Screen
+        name="BlogDetail"
+        component={BlogDetail}
+        options={{
+          headerShown: false, 
+          animationEnabled: true,
+          animationTypeForReplace: 'pop',
+          gestureEnabled: true,
+          gestureDirection : 'horizontal',
+          ...TransitionPresets.SlideFromRightIOS,
+        }} 
       />
     </Stack.Navigator>
   );

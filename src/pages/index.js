@@ -6,4 +6,6 @@ import Detail from './Detail';
 import Lontong from './Lontong';
 import Search from './Search';
 import AddBlogForm from './konten';
-export {Splashscreen, Homescreen, Recipe,Profile,Detail,Lontong,Search,AddBlogForm};
+import EditBlogForm from './EditBlogForm';
+import BlogDetail from './BlogDetail';
+export {Splashscreen, Homescreen, Recipe,Profile,Detail,Lontong,Search,AddBlogForm,EditBlogForm,BlogDetail};
