@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "668831506738",
+    "project_id": "sadeyum-e8a22",
+    "storage_bucket": "sadeyum-e8a22.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668831506738:android:d4a8550352c37b270cb72b",
+        "android_client_info": {
+          "package_name": "com.sadeyum"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxLuwsfNiwfe23vwYIBntySvDhV0zuXFQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,7 +1,10 @@
-import React from 'react';
-import {View, Text, ScrollView, TouchableOpacity, Image} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import React, {useEffect, useState, useCallback} from 'react';
+import {View, Text, ScrollView, TouchableOpacity, Image,ActivityIndicator} from 'react-native';
 import {MasakanFavorit} from './data';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import {KontenProfil} from '../../components';
+import firestore from '@react-native-firebase/firestore';
+import {fontType, colors} from '../../theme';
 
 const photocoffe =
   'https://i.pinimg.com/564x/81/90/3d/81903d3b630263edb5ce0c3ae726d3dd.jpg';
@@ -26,7 +29,50 @@ const karedok =
 
 
 const Recipe = ({item, variant, onPress}) => {
-const navigation = useNavigation();
+  const navigation = useNavigation();
+  const [loading, setLoading] = useState(true);
+  const [blogData, setBlogData] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('blog')
+      .onSnapshot(querySnapshot => {
+        const blogs = [];
+        querySnapshot.forEach(documentSnapshot => {
+          blogs.push({
+            ...documentSnapshot.data(),
+            id: documentSnapshot.id,
+          });
+        });
+        setBlogData(blogs);
+        setLoading(false);
+      });
+    return () => subscriber();
+  }, []);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      firestore()
+        .collection('blog')
+        .onSnapshot(querySnapshot => {
+          const blogs = [];
+          querySnapshot.forEach(documentSnapshot => {
+            blogs.push({
+              ...documentSnapshot.data(),
+              id: documentSnapshot.id,
+            });
+          });
+          setBlogData(blogs);
+        });
+      setRefreshing(false);
+    }, 1500);
+  }, []);
+  useEffect(() => {
+    console.log(blogData);
+  }, [blogData]);
+
   
   return (
     <View style={{flex: 1, backgroundColor: '#f5f5f5'}}>
@@ -337,6 +383,13 @@ const navigation = useNavigation();
                 </View>
               </TouchableOpacity>
             </View>
+            <View style={{paddingVertical: 10, gap: 10}}>
+          {loading ? (
+            <ActivityIndicator size={'large'} color={colors.blue()} />
+          ) : (
+            blogData.map((item, index) => <KontenProfil item={item} key={index} />)
+          )}
+        </View>
           </View>
         </View>
         <View></View>

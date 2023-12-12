@@ -6,7 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import {fontType, colors} from '../theme';
 import {formatDate} from '../utils/formatDate';
 
-const ItemSmall = ({item}) => {
+const KontenProfil = ({item}) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
@@ -38,7 +38,7 @@ const ItemSmall = ({item}) => {
   );
 };
 
-export default ItemSmall;
+export default KontenProfil;
 
 const styles = StyleSheet.create({
   listCard: {
@@ -80,8 +80,8 @@ const styles = StyleSheet.create({
   cardContent: {
     gap: 10,
     justifyContent: 'space-between',
-    paddingRight: 100,
-    paddingLeft: 150,
+    paddingRight: 10,
+    paddingLeft: 10,
     flex: 1,
     paddingVertical: 10,
   },

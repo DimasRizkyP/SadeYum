@@ -4,62 +4,71 @@ import {ArrowLeft, Like1, Receipt21, Message, Share, More} from 'iconsax-react-n
 import {useNavigation} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 import {fontType, colors} from '../../theme';
+import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 import {formatNumber} from '../../utils/formatNumber';
 import {formatDate} from '../../utils/formatDate';
-import axios from 'axios';
 import ActionSheet from 'react-native-actions-sheet';
 
 const BlogDetail = ({route}) => {
   const {blogId} = route.params;
+  const navigation = useNavigation();
   const [iconStates, setIconStates] = useState({
     liked: {variant: 'Linear', color: colors.grey(0.6)},
     bookmarked: {variant: 'Linear', color: colors.grey(0.6)},
   });
-  const [selectedBlog, setSelectedBlog] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const [selectedBlog, setSelectedBlog] = useState(null);
   const actionSheetRef = useRef(null);
-
   const openActionSheet = () => {
     actionSheetRef.current?.show();
   };
-
   const closeActionSheet = () => {
     actionSheetRef.current?.hide();
   };
-
   useEffect(() => {
-    getBlogById();
+    const subscriber = firestore()
+      .collection('blog')
+      .doc(blogId)
+      .onSnapshot(documentSnapshot => {
+        const blogData = documentSnapshot.data();
+        if (blogData) {
+          console.log('Blog data: ', blogData);
+          setSelectedBlog(blogData);
+        } else {
+          console.log(`Blog with ID ${blogId} not found.`);
+        }
+      });
+    setLoading(false);
+    return () => subscriber();
   }, [blogId]);
-
-  const getBlogById = async () => {
+  const navigateEdit = () => {
+    closeActionSheet();
+    navigation.navigate('EditBlog', {blogId});
+  };
+  const handleDelete = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get(
-        `https://656b20d3dac3630cf727ba2e.mockapi.io/sadeyum/blog/${blogId}`,
-      );
-      setSelectedBlog(response.data);
-      setLoading(false);
+      await firestore()
+        .collection('blog')
+        .doc(blogId)
+        .delete()
+        .then(() => {
+          console.log('Blog deleted!');
+        });
+      if (selectedBlog?.image) {
+        const imageRef = storage().refFromURL(selectedBlog?.image);
+        await imageRef.delete();
+      }
+      console.log('Blog deleted!');
+      closeActionSheet();
+      setSelectedBlog(null);
+      setLoading(false)
+      navigation.navigate('Profile');
     } catch (error) {
       console.error(error);
     }
   };
-
-  const navigateEdit = () => {
-    closeActionSheet()
-    navigation.navigate('EditBlog', {blogId})
-  }
-  const handleDelete = async () => {
-   await axios.delete(`https://656b20d3dac3630cf727ba2e.mockapi.io/sadeyum/blog/${blogId}`)
-      .then(() => {
-        closeActionSheet()
-        navigation.navigate('Profile');
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
-  const navigation = useNavigation();
   const scrollY = useRef(new Animated.Value(0)).current;
   const diffClampY = Animated.diffClamp(scrollY, 0, 52);
   const headerY = diffClampY.interpolate({
@@ -88,12 +97,12 @@ const BlogDetail = ({route}) => {
       <Animated.View
         style={[styles.header, {transform: [{translateY: headerY}]}]}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <ArrowLeft color={colors.grey(0.6)} variant="Linear" size={24} />
+          <ArrowLeft color={colors.green(1)} variant="Linear" size={24} />
         </TouchableOpacity>
         <View style={{flexDirection: 'row', justifyContent: 'center', gap: 20}}>
           <TouchableOpacity onPress={openActionSheet}>
             <More
-              color={colors.grey(0.6)}
+              color={colors.green(1)}
               variant="Linear"
               style={{transform: [{rotate: '90deg'}]}}
             />
@@ -102,7 +111,7 @@ const BlogDetail = ({route}) => {
       </Animated.View>
       {loading ? (
         <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-          <ActivityIndicator size={'large'} color={colors.green()} />
+          <ActivityIndicator size={'large'} color={colors.blue()} />
         </View>
       ) : (
         <Animated.ScrollView
@@ -139,7 +148,6 @@ const BlogDetail = ({route}) => {
           <Text style={styles.content}>{selectedBlog?.content}</Text>
         </Animated.ScrollView>
       )}
-
       <ActionSheet
         ref={actionSheetRef}
         containerStyle={{
@@ -157,8 +165,7 @@ const BlogDetail = ({route}) => {
             alignItems: 'center',
             paddingVertical: 15,
           }}
-          onPress={navigateEdit}
-          >
+          onPress={navigateEdit}>
           <Text
             style={{
               fontFamily: fontType['Pjs-Medium'],
@@ -245,17 +252,17 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   info: {
-    color: colors.green(0.6),
+    color: colors.grey(0.6),
     fontFamily: fontType['Pjs-SemiBold'],
     fontSize: 12,
   },
   category: {
-    color: colors.green(),
+    color: colors.blue(),
     fontFamily: fontType['Pjs-SemiBold'],
     fontSize: 12,
   },
   date: {
-    color: colors.black(1),
+    color: colors.grey(0.6),
     fontFamily: fontType['Pjs-Medium'],
     fontSize: 10,
   },

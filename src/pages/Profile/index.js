@@ -1,13 +1,23 @@
-import React, { useState, useCallback } from 'react';
-import { View, StatusBar, Image, Text, TouchableOpacity, StyleSheet,ActivityIndicator, RefreshControl } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { fontType, colors } from '../../theme';
-import { Setting2, Edit, AddSquare } from 'iconsax-react-native';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import axios from 'axios'; // Tambahkan impor untuk axios
+import React, {useEffect, useState, useCallback} from 'react';
+import {
+  View,
+  StatusBar,
+  Image,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ActivityIndicator,
+  RefreshControl,
+} from 'react-native';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import FastImage from 'react-native-fast-image';
+import {fontType, colors} from '../../theme';
+import {Setting2, Edit, AddSquare} from 'iconsax-react-native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
+import {formatNumber} from '../../utils/formatNumber';
 import style from './profile.style';
 import {ItemSmall} from '../../components';
-
 
 const sotoayam =
   'https://i.pinimg.com/564x/1d/e4/a1/1de4a19e2d70724d71ad912cec05885d.jpg';
@@ -19,31 +29,45 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [blogData, setBlogData] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-  const getDataBlog = async () => {
-    try {
-      const response = await axios.get(
-        'https://656b20d3dac3630cf727ba2e.mockapi.io/sadeyum/blog',
-      );
-      setBlogData(response.data);
-      setLoading(false)
-    } catch (error) {
-        console.error(error);
-    }
-  };
+
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('blog')
+      .onSnapshot(querySnapshot => {
+        const blogs = [];
+        querySnapshot.forEach(documentSnapshot => {
+          blogs.push({
+            ...documentSnapshot.data(),
+            id: documentSnapshot.id,
+          });
+        });
+        setBlogData(blogs);
+        setLoading(false);
+      });
+    return () => subscriber();
+  }, []);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
-      getDataBlog()
+      firestore()
+        .collection('blog')
+        .onSnapshot(querySnapshot => {
+          const blogs = [];
+          querySnapshot.forEach(documentSnapshot => {
+            blogs.push({
+              ...documentSnapshot.data(),
+              id: documentSnapshot.id,
+            });
+          });
+          setBlogData(blogs);
+        });
       setRefreshing(false);
     }, 1500);
   }, []);
-
-  useFocusEffect(
-    useCallback(() => {
-      getDataBlog();
-    }, [])
-  );
+  useEffect(() => {
+    console.log(blogData);
+  }, [blogData]);
   return (
     <View style={style.container}>
       <StatusBar backgroundColor={Colors.gray} />
@@ -78,7 +102,6 @@ const Profile = () => {
         </View>
       </View>
       <View style={{flexDirection: 'row'}}>
-
         <TouchableOpacity
           style={styles.floatingButton}
           onPress={() => navigation.navigate('AddBlog')}>
@@ -88,7 +111,6 @@ const Profile = () => {
     </View>
   );
 };
-
 
 export default Profile;
 const styles = StyleSheet.create({
@@ -164,6 +186,3 @@ const profile = StyleSheet.create({
     color: colors.black(),
   },
 });
-
-
-

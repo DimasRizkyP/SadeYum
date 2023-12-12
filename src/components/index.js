@@ -1,4 +1,5 @@
 import ListMasakanFavorit from './MasakanFavorit';
 import SearchBar from './SearchBar';
 import ItemSmall from './ItemSmall';
-export {ListMasakanFavorit,SearchBar,ItemSmall};
+import KontenProfil from './kontenprofil';
+export {ListMasakanFavorit,SearchBar,ItemSmall,KontenProfil};
