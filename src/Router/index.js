@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
-import {Splashscreen, Recipe, Profile, Detail, Lontong, Search,AddBlogForm,EditBlogForm,BlogDetail} from '../pages';
+import {Splashscreen, Recipe, Profile, Detail, Lontong, Search,AddBlogForm,EditBlogForm,BlogDetail,Register,Login} from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../pages/Homescreen';
 import {fontType, colors} from '../theme';
@@ -99,6 +99,16 @@ const Router = () => {
       <Stack.Screen
         name="MainApp"
         component={MainApp}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Register"
+        component={Register}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Login"
+        component={Login}
         options={{headerShown: false}}
       />
       <Stack.Screen

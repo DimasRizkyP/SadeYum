@@ -26,16 +26,7 @@ const MasakanFavorit = ({item, variant, onPress}) => {
         source={{uri: item.image}}
         style={{width: 144, height: 105, borderRadius: 20}}
       />
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-        <Text style={{fontSize: 16, fontWeight: 'bold', color: 'black'}}>
-          {item.title}
-        </Text>
-        <View style={{top: 6}}>
-          <TouchableOpacity onPress={onPress}>
-            <Heart color="rgb(0, 88, 47)" variant={variant} size={24} />
-          </TouchableOpacity>
-        </View>
-      </View>
+
       <Text style={{fontSize: 14, color: 'red'}}>{item.kategori}</Text>
       <View
         style={{

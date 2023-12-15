@@ -154,12 +154,12 @@ const EditBlogForm = ({route}) => {
             {dataCategory.map((item, index) => {
               const bgColor =
                 item.id === blogData.category.id
-                  ? colors.black()
-                  : colors.grey(0.08);
+                  ? colors.green()
+                  : colors.black(0.08);
               const color =
                 item.id === blogData.category.id
                   ? colors.white()
-                  : colors.grey();
+                  : colors.black();
               return (
                 <TouchableOpacity
                   key={index}
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
     color: colors.black(),
   },
   bottomBar: {
-    backgroundColor: colors.white(),
+    backgroundColor: colors.green(),
     alignItems: 'flex-end',
     paddingHorizontal: 24,
     paddingVertical: 10,
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
   button: {
     paddingHorizontal: 20,
     paddingVertical: 10,
-    backgroundColor: colors.blue(),
+    backgroundColor: colors.black(),
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
@@ -308,7 +308,7 @@ const textInput = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     padding: 10,
-    borderColor: colors.grey(0.4),
+    borderColor: colors.black(0.4),
   },
   title: {
     fontSize: 16,

@@ -7,9 +7,11 @@ import {fontType, colors} from '../../theme';
 import ImagePicker from 'react-native-image-crop-picker';
 import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 const AddBlogForm = () => {
   const [loading, setLoading] = useState(false);
+  const authorId = auth().currentUser.uid;
   const handleUpload = async () => {
     let filename = image.substring(image.lastIndexOf('/') + 1);
     const extension = filename.split('.').pop();
@@ -27,6 +29,7 @@ const AddBlogForm = () => {
         image: url,
         content: blogData.content,
         createdAt: new Date(),
+        authorId
       });
       setLoading(false);
       console.log('Blog added!');
@@ -71,6 +74,11 @@ const AddBlogForm = () => {
       });
   };
   return (
+    <KeyboardAvoidingView
+    style={{flex: 1}}
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    enabled>
+
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -197,6 +205,7 @@ const AddBlogForm = () => {
         </View>
       )}
     </View>
+    </KeyboardAvoidingView>
   );
 };
 

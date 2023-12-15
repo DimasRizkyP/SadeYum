@@ -97,12 +97,12 @@ const BlogDetail = ({route}) => {
       <Animated.View
         style={[styles.header, {transform: [{translateY: headerY}]}]}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <ArrowLeft color={colors.green(1)} variant="Linear" size={24} />
+          <ArrowLeft color={colors.black(1)} variant="Linear" size={24} />
         </TouchableOpacity>
         <View style={{flexDirection: 'row', justifyContent: 'center', gap: 20}}>
           <TouchableOpacity onPress={openActionSheet}>
             <More
-              color={colors.green(1)}
+              color={colors.black(1)}
               variant="Linear"
               style={{transform: [{rotate: '90deg'}]}}
             />
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
     left: 0,
-    backgroundColor: colors.white(),
+    backgroundColor: colors.green(),
   },
   bottomBar: {
     position: 'absolute',
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   date: {
-    color: colors.grey(0.6),
+    color: colors.black(0.6),
     fontFamily: fontType['Pjs-Medium'],
     fontSize: 10,
   },
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   content: {
-    color: colors.grey(),
+    color: colors.black(),
     fontFamily: fontType['Pjs-Medium'],
     fontSize: 10,
     lineHeight: 20,

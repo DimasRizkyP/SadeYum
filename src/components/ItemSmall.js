@@ -80,9 +80,9 @@ const styles = StyleSheet.create({
   cardContent: {
     gap: 10,
     justifyContent: 'space-between',
-    paddingRight: 100,
-    paddingLeft: 150,
+    paddingRight: 90,
+    paddingLeft: 130,
     flex: 1,
-    paddingVertical: 10,
+    paddingVertical: 20,
   },
 });

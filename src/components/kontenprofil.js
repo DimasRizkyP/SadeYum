@@ -42,7 +42,7 @@ export default KontenProfil;
 
 const styles = StyleSheet.create({
   listCard: {
-    paddingHorizontal: 60,
+    paddingHorizontal: 55,
     paddingVertical: 10,
     gap: 15,
   },

@@ -8,5 +8,7 @@ import Search from './Search';
 import AddBlogForm from './konten';
 import EditBlogForm from './EditBlogForm';
 import BlogDetail from './BlogDetail';
+import Login from "./Login";
+import Register from "./Register";
 // import AddBlogResep from './AddblogResep';
-export {Splashscreen, Homescreen, Recipe,Profile,Detail,Lontong,Search,AddBlogForm,EditBlogForm,BlogDetail};
+export {Splashscreen, Homescreen, Recipe,Profile,Detail,Lontong,Search,AddBlogForm,EditBlogForm,BlogDetail,Login,Register};
